@@ -3,467 +3,257 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SocialAI Manager - Dashboard</title>
+    <title>Social Media Dashboard</title>
+    <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="css/style.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
 </head>
 <body>
-    <!-- Sidebar -->
-    <aside class="sidebar">
-        <div class="logo">
-            <h1><i class="fas fa-robot"></i> <span>SocialAI</span></h1>
-        </div>
-        
-        <ul class="menu">
-            <li class="menu-item">
-                <a href="index.html" class="menu-link active">
-                    <i class="fas fa-home"></i>
-                    <span>Dashboard</span>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="content-calendar.html" class="menu-link">
-                    <i class="fas fa-calendar"></i>
-                    <span>Content Calendar</span>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="engagement.html" class="menu-link">
-                    <i class="fas fa-inbox"></i>
-                    <span>Engagement</span>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="analytics.html" class="menu-link">
+    <div class="dashboard-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
                     <i class="fas fa-chart-line"></i>
-                    <span>Analytics</span>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="product-details.html" class="menu-link">
-                    <i class="fas fa-box"></i>
-                    <span>Products</span>
-                </a>
-            </li>
-            <li class="menu-item">
-                <a href="#" class="menu-link">
-                    <i class="fas fa-cog"></i>
-                    <span>Settings</span>
-                </a>
-            </li>
-        </ul>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="main-content">
-        <!-- Header -->
-        <header class="header">
-            <div class="search-bar">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Search...">
-            </div>
-            
-            <div class="user-menu">
-                <div class="notification">
-                    <i class="fas fa-bell"></i>
-                    <span class="notification-count">3</span>
-                </div>
-                <div class="user-profile">
-                    <div class="user-avatar">AI</div>
-                    <div>Social Media Manager</div>
+                    <span>SocialDash</span>
                 </div>
             </div>
-        </header>
-
-        <!-- Dashboard Content -->
-        <section class="dashboard">
-            <div class="page-title">
-                <h2>Dashboard Overview</h2>
-                <div class="title-actions">
-                    <button class="btn" onclick="location.reload()">
-                        <i class="fas fa-sync"></i> Refresh
-                    </button>
-                    <button class="btn btn-primary" id="create-post-btn">
-                        <i class="fas fa-plus"></i> Create Post
-                    </button>
-                </div>
-            </div>
-
-            <!-- Stats Grid - Modified for real-time data -->
-            <div class="stats-grid">
-                <div class="stat-card">
-                    <div class="stat-icon bg-primary">
-                        <i class="fas fa-users"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3 id="followers-count">
-                            <i class="fas fa-spinner fa-spin"></i>
-                        </h3>
-                        <p>Total Followers</p>
-                        <div class="stat-change positive">
-                            <i class="fas fa-arrow-up"></i>
-                            <span>+12.5% this week</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon bg-success">
-                        <i class="fas fa-eye"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3 id="impressions-count">
-                            <i class="fas fa-spinner fa-spin"></i>
-                        </h3>
-                        <p>Impressions</p>
-                        <div class="stat-change positive">
-                            <i class="fas fa-arrow-up"></i>
-                            <span>+8.2% this week</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon bg-warning">
+            <ul class="nav-menu">
+                <li class="nav-item active">
+                    <a href="index.html" class="nav-link">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="analytics.html" class="nav-link">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Analytics</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="content-calendar.html" class="nav-link">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span>Content Calendar</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="engagement.html" class="nav-link">
                         <i class="fas fa-heart"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3 id="engagements-count">
-                            <i class="fas fa-spinner fa-spin"></i>
-                        </h3>
-                        <p>Engagements</p>
-                        <div class="stat-change positive">
-                            <i class="fas fa-arrow-up"></i>
-                            <span>+15.7% this week</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon bg-primary">
-                        <i class="fas fa-clock"></i>
-                    </div>
-                    <div class="stat-info">
-                        <h3 id="scheduled-count">12</h3>
-                        <p>Scheduled Posts</p>
-                        <div class="stat-change">
-                            <i class="fas fa-clock"></i>
-                            <span>Next in 2 hours</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                        <span>Engagement</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
 
-            <!-- Content Row -->
-            <div class="content-row">
-                <!-- Left Column -->
-                <div class="left-column">
-                    <!-- Analytics Chart -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Performance Analytics</h3>
-                            <div>
-                                <select id="chart-range">
-                                    <option>Last 7 Days</option>
-                                    <option>Last 30 Days</option>
-                                    <option>Last 90 Days</option>
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <h1>Dashboard Overview</h1>
+                    <p class="header-subtitle">Welcome back! Here's what's happening with your social media.</p>
+                </div>
+                <div class="header-right">
+                    <div class="connection-status" id="connection-status">
+                        <i class="fas fa-circle online"></i>
+                        <span>Connected</span>
+                    </div>
+                    <button class="btn btn-primary" id="create-post-btn">
+                        <i class="fas fa-plus"></i>
+                        Create Post
+                    </button>
+                    <div class="user-profile">
+                        <img src="https://via.placeholder.com/40" alt="User Avatar" class="user-avatar">
+                        <div class="user-info">
+                            <span class="user-name" id="user-name">John Doe</span>
+                            <small class="user-role">Social Media Manager</small>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Stats Cards -->
+            <section class="stats-section">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon followers">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 data-metric="followers" id="total-followers">0</h3>
+                            <p>Total Followers</p>
+                            <span class="stat-change positive" id="followers-change">+0%</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon impressions">
+                            <i class="fas fa-eye"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 data-metric="impressions" id="total-impressions">0</h3>
+                            <p>Impressions</p>
+                            <span class="stat-change positive" id="impressions-change">+0%</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon engagements">
+                            <i class="fas fa-heart"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 data-metric="engagements" id="total-engagements">0</h3>
+                            <p>Engagements</p>
+                            <span class="stat-change positive" id="engagements-change">+0%</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon scheduled">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="stat-info">
+                            <h3 data-metric="scheduled" id="scheduled-posts">0</h3>
+                            <p>Scheduled Posts</p>
+                            <span class="stat-change neutral" id="scheduled-change">This week</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Charts and Recent Activity -->
+            <section class="content-section">
+                <div class="content-grid">
+                    <!-- Performance Chart -->
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Performance Overview</h3>
+                            <div class="chart-controls">
+                                <select id="timeframe-selector">
+                                    <option value="24h">Last 24 Hours</option>
+                                    <option value="7d" selected>Last 7 Days</option>
+                                    <option value="30d">Last 30 Days</option>
                                 </select>
                             </div>
                         </div>
-                        <div class="analytics-chart">
-                            <canvas id="performanceChart"></canvas>
+                        <div class="chart-wrapper">
+                            <canvas id="performance-chart"></canvas>
                         </div>
                     </div>
-                    
-                    <!-- Scheduled Posts -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Scheduled Posts</h3>
-                            <a href="#">View All</a>
-                        </div>
-                        
-                        <ul class="post-list">
-                            <li class="post-item">
-                                <div class="post-thumb">
-                                    <i class="fas fa-image"></i>
-                                </div>
-                                <div class="post-content">
-                                    <h4>New Product Launch</h4>
-                                    <p>Check out our latest product with special discounts</p>
-                                    <div class="post-meta">
-                                        <span><i class="fas fa-clock"></i> Today, 3:00 PM</span>
-                                        <span><i class="fas fa-globe"></i> Instagram, Facebook</span>
-                                    </div>
-                                </div>
-                                <div class="post-status status-scheduled">Scheduled</div>
-                            </li>
-                            
-                            <li class="post-item">
-                                <div class="post-thumb">
-                                    <i class="fas fa-video"></i>
-                                </div>
-                                <div class="post-content">
-                                    <h4>Behind the Scenes</h4>
-                                    <p>Take a look at how we create our products</p>
-                                    <div class="post-meta">
-                                        <span><i class="fas fa-clock"></i> Tomorrow, 10:00 AM</span>
-                                        <span><i class="fas fa-globe"></i> Instagram Reels</span>
-                                    </div>
-                                </div>
-                                <div class="post-status status-scheduled">Scheduled</div>
-                            </li>
-                            
-                            <li class="post-item">
-                                <div class="post-thumb">
-                                    <i class="fas fa-image"></i>
-                                </div>
-                                <div class="post-content">
-                                    <h4>Weekly Tip</h4>
-                                    <p>Improve your workflow with this simple trick</p>
-                                    <div class="post-meta">
-                                        <span><i class="fas fa-clock"></i> Aug 25, 2:30 PM</span>
-                                        <span><i class="fas fa-globe"></i> Instagram, Facebook</span>
-                                    </div>
-                                </div>
-                                <div class="post-status status-scheduled">Scheduled</div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                
-                <!-- Right Column -->
-                <div class="right-column">
-                    <!-- Recent Activities - Modified for real-time data -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Recent Activities</h3>
-                            <a href="#" class="refresh-activities">
-                                <i class="fas fa-sync"></i>
-                            </a>
-                        </div>
-                        
-                        <div class="activity-list">
-                            <!-- This will be populated by JavaScript -->
-                            <div class="activity-item loading">
-                                <div class="activity-icon">
-                                    <i class="fas fa-spinner fa-spin"></i>
-                                </div>
-                                <div class="activity-content">
-                                    <h4>Loading recent activity...</h4>
-                                    <p>Fetching latest data from Facebook API</p>
-                                </div>
-                                <div class="activity-time">Now</div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- AI Suggestions -->
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">AI Suggestions</h3>
-                            <a href="#" class="refresh-suggestions">
-                                <i class="fas fa-sync"></i>
-                            </a>
-                        </div>
-                        
-                        <div class="suggestion-content">
-                            <div class="suggestion-item">
-                                <span class="suggestion-icon">💡</span>
-                                <div>
-                                    <strong>Optimal Posting Time:</strong> Your audience is most active between 2-4 PM on weekdays
-                                </div>
-                            </div>
-                            <div class="suggestion-item">
-                                <span class="suggestion-icon">🎯</span>
-                                <div>
-                                    <strong>Content Idea:</strong> Behind-the-scenes content gets 34% more engagement
-                                </div>
-                            </div>
-                            <div class="suggestion-item">
-                                <span class="suggestion-icon">📈</span>
-                                <div>
-                                    <strong>Trending Topic:</strong> Posts about industry trends are performing well this week
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main>
 
-    <!-- Create Post Modal - Updated -->
+                    <!-- Recent Activity -->
+                    <div class="activity-container">
+                        <div class="activity-header">
+                            <h3>Recent Activity</h3>
+                            <button class="btn btn-sm" id="refresh-activity">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                        </div>
+                        <div class="activity-list" id="activity-list">
+                            <!-- Dynamic content will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Quick Actions -->
+            <section class="quick-actions">
+                <h3>Quick Actions</h3>
+                <div class="action-buttons">
+                    <button class="action-btn" onclick="showCreatePostModal()">
+                        <i class="fas fa-plus"></i>
+                        <span>Create Post</span>
+                    </button>
+                    <button class="action-btn" onclick="window.location.href='analytics.html'">
+                        <i class="fas fa-chart-line"></i>
+                        <span>View Analytics</span>
+                    </button>
+                    <button class="action-btn" onclick="window.location.href='content-calendar.html'">
+                        <i class="fas fa-calendar"></i>
+                        <span>Schedule Content</span>
+                    </button>
+                    <button class="action-btn" onclick="refreshAllData()">
+                        <i class="fas fa-sync"></i>
+                        <span>Refresh Data</span>
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Create Post Modal -->
     <div class="modal" id="create-post-modal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 class="modal-title">Create New Post</h3>
-                <button class="close-modal">&times;</button>
+                <h3>Create New Post</h3>
+                <button class="close-modal" onclick="hideCreatePostModal()">&times;</button>
             </div>
-            
-            <div class="form-group">
-                <label for="post-text">Content</label>
-                <textarea class="form-control" id="post-text" rows="4" placeholder="What would you like to post?"></textarea>
-            </div>
-            
-            <div class="form-group">
-                <label for="post-platform">Platforms</label>
-                <select class="form-control" id="post-platform" multiple>
-                    <option value="facebook" selected>Facebook</option>
-                    <option value="instagram">Instagram</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="post-type">Post Type</label>
-                <select class="form-control" id="post-type">
-                    <option value="text">Text Post</option>
-                    <option value="image">Image Post</option>
-                    <option value="video">Video/Reel</option>
-                    <option value="link">Link Post</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label for="post-link">Link (Optional)</label>
-                <input type="url" class="form-control" id="post-link" placeholder="https://example.com">
-            </div>
-            
-            <div class="form-group">
-                <label for="post-time">Schedule Time (Optional)</label>
-                <input type="datetime-local" class="form-control" id="post-time">
-            </div>
-            
-            <div class="form-actions">
-                <button class="btn" id="cancel-post">Cancel</button>
-                <button class="btn btn-primary" id="submit-post">
-                    <i class="fas fa-paper-plane"></i> Publish Post
-                </button>
-                <button class="btn" id="create-post-btn-2" style="display: none;">
-                    <i class="fas fa-plus"></i> Create Another
-                </button>
-            </div>
+            <form id="create-post-form">
+                <div class="form-group">
+                    <label for="post-content">Post Content</label>
+                    <textarea id="post-content" placeholder="What's on your mind?" required></textarea>
+                    <div class="character-count">
+                        <span id="char-count">0</span>/280
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Select Platforms</label>
+                    <div class="platform-selector">
+                        <label class="platform-option">
+                            <input type="checkbox" name="platforms" value="facebook" checked>
+                            <i class="fab fa-facebook"></i>
+                            <span>Facebook</span>
+                        </label>
+                        <label class="platform-option">
+                            <input type="checkbox" name="platforms" value="instagram">
+                            <i class="fab fa-instagram"></i>
+                            <span>Instagram</span>
+                        </label>
+                        <label class="platform-option">
+                            <input type="checkbox" name="platforms" value="twitter">
+                            <i class="fab fa-twitter"></i>
+                            <span>Twitter</span>
+                        </label>
+                        <label class="platform-option">
+                            <input type="checkbox" name="platforms" value="linkedin">
+                            <i class="fab fa-linkedin"></i>
+                            <span>LinkedIn</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="schedule-time">Schedule (Optional)</label>
+                    <input type="datetime-local" id="schedule-time">
+                </div>
+
+                <div class="form-group">
+                    <label for="post-tags">Tags</label>
+                    <input type="text" id="post-tags" placeholder="e.g., marketing, product, update">
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="hideCreatePostModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">
+                        <span id="submit-text">Post Now</span>
+                        <i class="fas fa-spinner fa-spin" id="submit-loader" style="display: none;"></i>
+                    </button>
+                </div>
+            </form>
         </div>
     </div>
 
-    <!-- Status Messages -->
-    <div id="status-message" class="status-message" style="display: none;">
-        <div class="status-content">
-            <i class="fas fa-check-circle"></i>
-            <span>Post published successfully!</span>
-        </div>
-    </div>
+    <!-- Notification Container -->
+    <div class="notification-container" id="notification-container"></div>
 
-    <!-- Load JavaScript at the end -->
-    <script src="js/script.js"></script>
-
-    <!-- Additional CSS for real-time features -->
-    <style>
-        .stat-info h3 {
-            min-height: 1.5em;
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-        }
-
-        .activity-list {
-            min-height: 200px;
-        }
-
-        .activity-item.loading {
-            opacity: 0.7;
-        }
-
-        .stat-change {
-            font-size: 0.8rem;
-            margin-top: 8px;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .stat-change.positive {
-            color: #28a745;
-        }
-
-        .stat-change.negative {
-            color: #dc3545;
-        }
-
-        .title-actions {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
-
-        .suggestion-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            padding: 12px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .suggestion-item:last-child {
-            border-bottom: none;
-        }
-
-        .suggestion-icon {
-            font-size: 1.2rem;
-            flex-shrink: 0;
-        }
-
-        .status-message {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #28a745;
-            color: white;
-            padding: 15px 20px;
-            border-radius: 5px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-            z-index: 1001;
-            animation: slideIn 0.3s ease;
-        }
-
-        .status-content {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
-        }
-
-        .refresh-activities,
-        .refresh-suggestions {
-            color: #6c757d;
-            text-decoration: none;
-            font-size: 0.9rem;
-            transition: color 0.3s;
-        }
-
-        .refresh-activities:hover,
-        .refresh-suggestions:hover {
-            color: #4361ee;
-        }
-
-        .fa-spin {
-            animation: spin 1s linear infinite;
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-    </style>
+    <!-- Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/socket.js"></script>
+    <script src="js/dashboard.js"></script>
 </body>
 </html>
