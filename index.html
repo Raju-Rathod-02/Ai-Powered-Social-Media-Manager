@@ -67,7 +67,7 @@
                     <div class="user-profile">
                         <img src="https://via.placeholder.com/40" alt="User Avatar" class="user-avatar">
                         <div class="user-info">
-                            <span class="user-name" id="user-name">John Doe</span>
+                            <span class="user-name" id="user-name">Ai power</span>
                             <small class="user-role">Social Media Manager</small>
                         </div>
                     </div>
@@ -82,9 +82,9 @@
                             <i class="fas fa-users"></i>
                         </div>
                         <div class="stat-info">
-                            <h3 data-metric="followers" id="total-followers">0</h3>
+                            <h3 data-metric="followers" id="total-followers">3</h3>
                             <p>Total Followers</p>
-                            <span class="stat-change positive" id="followers-change">+0%</span>
+                            <span class="stat-change positive" id="followers-change">+8%</span>
                         </div>
                     </div>
 
@@ -93,9 +93,9 @@
                             <i class="fas fa-eye"></i>
                         </div>
                         <div class="stat-info">
-                            <h3 data-metric="impressions" id="total-impressions">0</h3>
+                            <h3 data-metric="impressions" id="total-impressions">5</h3>
                             <p>Impressions</p>
-                            <span class="stat-change positive" id="impressions-change">+0%</span>
+                            <span class="stat-change positive" id="impressions-change">+99%</span>
                         </div>
                     </div>
 
@@ -104,9 +104,9 @@
                             <i class="fas fa-heart"></i>
                         </div>
                         <div class="stat-info">
-                            <h3 data-metric="engagements" id="total-engagements">0</h3>
+                            <h3 data-metric="engagements" id="total-engagements">103</h3>
                             <p>Engagements</p>
-                            <span class="stat-change positive" id="engagements-change">+0%</span>
+                            <span class="stat-change positive" id="engagements-change">+26%</span>
                         </div>
                     </div>
 
@@ -115,7 +115,7 @@
                             <i class="fas fa-clock"></i>
                         </div>
                         <div class="stat-info">
-                            <h3 data-metric="scheduled" id="scheduled-posts">0</h3>
+                            <h3 data-metric="scheduled" id="scheduled-posts">1</h3>
                             <p>Scheduled Posts</p>
                             <span class="stat-change neutral" id="scheduled-change">This week</span>
                         </div>
@@ -250,10 +250,17 @@
     <div class="notification-container" id="notification-container"></div>
 
     <!-- Scripts -->
-    <script src="js/config.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/api.js"></script>
-    <script src="js/socket.js"></script>
-    <script src="js/dashboard.js"></script>
+    <!-- External Libraries -->
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<!-- Your JavaScript files - FIXED ORDER -->
+<script src="js/config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/api.js"></script>
+<script src="js/socket.js"></script>
+<script src="js/dashboard.js"></script>
+
+
 </body>
 </html>

@@ -1,0 +1,108 @@
+const axios = require('axios');
+
+class InstagramService {
+  constructor() {
+    this.baseURL = process.env.INSTAGRAM_BASE_URL;
+    this.accessToken = process.env.INSTAGRAM_ACCESS_TOKEN;
+  }
+
+  // Test your token
+  async testToken() {
+    try {
+      const response = await axios.get(`${this.baseURL}/me`, {
+        params: {
+          access_token: this.accessToken,
+          fields: 'id,username,account_type,media_count'
+        }
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error(`Token test failed: ${error.response?.data?.error?.message || error.message}`);
+    }
+  }
+
+  // Get your Instagram profile
+  async getProfile() {
+    try {
+      const response = await axios.get(`${this.baseURL}/me`, {
+        params: {
+          access_token: this.accessToken,
+          fields: 'id,username,name,biography,profile_picture_url,followers_count,follows_count,media_count'
+        }
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error(`Failed to get profile: ${error.response?.data?.error?.message || error.message}`);
+    }
+  }
+
+  // Get your Instagram media
+  async getMedia(limit = 25) {
+    try {
+      const response = await axios.get(`${this.baseURL}/me/media`, {
+        params: {
+          access_token: this.accessToken,
+          fields: 'id,caption,media_type,media_url,permalink,timestamp,like_count,comments_count,thumbnail_url',
+          limit: limit
+        }
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error(`Failed to get media: ${error.response?.data?.error?.message || error.message}`);
+    }
+  }
+
+  // Create a post (step 1: create container)
+  async createMediaContainer(mediaData) {
+    try {
+      const { image_url, video_url, caption, media_type = 'IMAGE' } = mediaData;
+      
+      const params = {
+        access_token: this.accessToken,
+        caption: caption || ''
+      };
+
+      if (media_type === 'IMAGE') {
+        params.image_url = image_url;
+      } else if (media_type === 'VIDEO') {
+        params.video_url = video_url;
+        params.media_type = 'VIDEO';
+      }
+
+      const response = await axios.post(`${this.baseURL}/me/media`, params);
+      return response.data;
+    } catch (error) {
+      throw new Error(`Failed to create media container: ${error.response?.data?.error?.message || error.message}`);
+    }
+  }
+
+  // Publish a post (step 2: publish container)
+  async publishMedia(creationId) {
+    try {
+      const response = await axios.post(`${this.baseURL}/me/media_publish`, {
+        access_token: this.accessToken,
+        creation_id: creationId
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error(`Failed to publish media: ${error.response?.data?.error?.message || error.message}`);
+    }
+  }
+
+  // Get insights for a specific post
+  async getMediaInsights(mediaId) {
+    try {
+      const response = await axios.get(`${this.baseURL}/${mediaId}/insights`, {
+        params: {
+          access_token: this.accessToken,
+          metric: 'impressions,reach,likes,comments,saves,shares'
+        }
+      });
+      return response.data;
+    } catch (error) {
+      throw new Error(`Failed to get insights: ${error.response?.data?.error?.message || error.message}`);
+    }
+  }
+}
+
+module.exports = new InstagramService();
